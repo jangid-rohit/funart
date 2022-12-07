@@ -44,9 +44,9 @@ function App() {
   };
   const change = (e) => {
     const id = activeId;
-
-    let newValue = property[id];
     
+    let newValue = property[id];
+    console.log(newValue);
     
     if (e.target.name == "color") {
       newValue.color = e.target.value;
@@ -66,10 +66,8 @@ function App() {
       newValue.lineColor = e.target.value;
     }
     else if (e.target.name == "lineDots") {
-      console.log(e.target.checked);
-      console.log(newValue);
-      newValue.lineDots = e.target.checked;
-      console.log(newValue);
+        newValue.lineDots = e.target.checked;
+      
     }
     else if (e.target.name == "lineStyle") {
       newValue.lineStyle = e.target.value;
