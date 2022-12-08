@@ -9,7 +9,7 @@ function circle(x, y, ctx, property) {
     ctx.rotate( (Math.PI / 180) * property.rotation);  //rotate 25 degrees.
     
     ctx.translate(-x, -y);            //translate center back to 0,0
-
+    ctx.transform(1,0,0,1,property.hMove,property.vMove);
     ctx.arc(x, y, property.radius, 0, 2 * Math.PI, false);
     ctx.lineWidth = property.lineThickness;
         ctx.strokeStyle = property.lineColor;

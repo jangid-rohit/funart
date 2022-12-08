@@ -74,8 +74,16 @@ function App() {
         newValue.lineStyle = e.target.value;
         break;
       case "rotation":
-        newValue.rotation = e.target.value;
+          newValue.rotation = e.target.value;
         break;
+       case "hMove":
+           newValue.hMove = e.target.value;
+           break;
+        case "vMove":
+              newValue.vMove = e.target.value;
+              break;
+
+        
         
     }
     setProperty({ ...property, [id]: newValue });
@@ -97,6 +105,8 @@ function App() {
         lineDots: false,
         lineStyle: "",
         rotation: 0,
+        hMove:0,
+        vMove:0
       },
     };
     setProperty({ ...property, ...defaultProperty });
@@ -248,6 +258,24 @@ function App() {
               type="number"
               name="rotation"
               value={property[activeId]?.rotation}
+              onChange={change}
+            />
+          </span>
+          <span>
+          h-move{" "}
+            <input
+              type="number"
+              name="hMove"
+              value={property[activeId]?.hMove}
+              onChange={change}
+            />
+          </span>
+          <span>
+          v-move{" "}
+            <input
+              type="number"
+              name="vMove"
+              value={property[activeId]?.vMove}
               onChange={change}
             />
           </span>

@@ -8,6 +8,9 @@ function reactangle(x, y, ctx, property) {
   
   ctx.translate(-x, -y);            //translate center back to 0,0
   
+  ctx.transform(1,0,0,1,property.hMove,property.vMove);
+
+
   ctx.rect(
     x - property.radius / 2,
     y - property.radius / 2,
