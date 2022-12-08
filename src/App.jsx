@@ -74,17 +74,22 @@ function App() {
         newValue.lineStyle = e.target.value;
         break;
       case "rotation":
-          newValue.rotation = e.target.value;
+        newValue.rotation = e.target.value;
         break;
-       case "hMove":
-           newValue.hMove = e.target.value;
-           break;
-        case "vMove":
-              newValue.vMove = e.target.value;
-              break;
-
-        
-        
+      case "hMove":
+        newValue.hMove = e.target.value;
+        break;
+      case "vMove":
+        newValue.vMove = e.target.value;
+        break;
+        case "hSkew":
+          newValue.hSkew = e.target.value;
+          break;
+        case "vSkew":
+          newValue.vSkew = e.target.value;
+          break;        
+      default:
+        console.log("Nothing to happen here");
     }
     setProperty({ ...property, [id]: newValue });
     console.log(newValue);
@@ -105,8 +110,10 @@ function App() {
         lineDots: false,
         lineStyle: "",
         rotation: 0,
-        hMove:0,
-        vMove:0
+        hMove: 0,
+        vMove: 0,
+        hSkew: 0,
+        vSkew: 0,
       },
     };
     setProperty({ ...property, ...defaultProperty });
@@ -253,7 +260,7 @@ function App() {
             />
           </span>
           <span>
-          rotation{" "}
+            rotation{" "}
             <input
               type="number"
               name="rotation"
@@ -262,7 +269,7 @@ function App() {
             />
           </span>
           <span>
-          h-move{" "}
+            h-move{" "}
             <input
               type="number"
               name="hMove"
@@ -271,12 +278,33 @@ function App() {
             />
           </span>
           <span>
-          v-move{" "}
+            v-move{" "}
             <input
               type="number"
               name="vMove"
               value={property[activeId]?.vMove}
               onChange={change}
+            />
+          </span>
+
+          <span>
+            h-skew{" "}
+            <input
+              type="number"
+              name="hSkew"
+              value={property[activeId]?.hSkew}
+              onChange={change}
+              step="0.1"
+            />
+          </span>
+          <span>
+            v-skew{" "}
+            <input
+              type="number"
+              name="vSkew"
+              value={property[activeId]?.vSkew}
+              onChange={change}
+              step="0.1"
             />
           </span>
         </div>
