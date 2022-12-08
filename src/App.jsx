@@ -44,36 +44,42 @@ function App() {
   };
   const change = (e) => {
     const id = activeId;
-    
+
     let newValue = property[id];
-    console.log(newValue);
-    
-    if (e.target.name == "color") {
-      newValue.color = e.target.value;
-    } else if (e.target.name == "radius") {
-      newValue.radius = Number.parseInt(e.target.value);
-    } else if (e.target.name == "isFilled") {
-      newValue.isFilled = e.target.checked;
-    } else if (e.target.name == "visible") {
-       newValue.isVisible = e.target.checked;
-    } else if (e.target.name == "lineThickness") {
-      newValue.lineThickness = e.target.value;
-    }
-    else if (e.target.name == "fillColor") {
-      newValue.fillColor = e.target.value;
-    }
-    else if (e.target.name == "lineColor") {
-      newValue.lineColor = e.target.value;
-    }
-    else if (e.target.name == "lineDots") {
+    console.log(property);
+
+    switch (e.target.name) {
+      case "radius":
+        newValue.radius = Number.parseInt(e.target.value);
+        break;
+      case "isFilled":
+        newValue.isFilled = e.target.checked;
+        break;
+      case "visible":
+        newValue.isVisible = e.target.checked;
+        break;
+      case "lineThickness":
+        newValue.lineThickness = e.target.value;
+        break;
+      case "fillColor":
+        newValue.fillColor = e.target.value;
+        break;
+      case "lineColor":
+        newValue.lineColor = e.target.value;
+        break;
+      case "lineDots":
         newValue.lineDots = e.target.checked;
-      
-    }
-    else if (e.target.name == "lineStyle") {
-      newValue.lineStyle = e.target.value;
+        break;
+      case "lineStyle":
+        newValue.lineStyle = e.target.value;
+        break;
+      case "rotation":
+        newValue.rotation = e.target.value;
+        break;
+        
     }
     setProperty({ ...property, [id]: newValue });
-
+    console.log(newValue);
     draw(Object.values(property));
   };
 
@@ -90,6 +96,7 @@ function App() {
         lineThickness: 1,
         lineDots: false,
         lineStyle: "",
+        rotation: 0,
       },
     };
     setProperty({ ...property, ...defaultProperty });
@@ -183,7 +190,7 @@ function App() {
             <input
               type="checkbox"
               name="isFilled"
-              value={property[activeId]?.isFilled}
+              checked={property[activeId]?.isFilled}
               onChange={change}
             />
             fill color{" "}
@@ -224,7 +231,7 @@ function App() {
             <input
               type="checkbox"
               name="lineDots"
-              value={property[activeId]?.lineDots}
+              checked={property[activeId]?.lineDots}
               onChange={change}
             />
             line style{" "}
@@ -232,6 +239,15 @@ function App() {
               type="text"
               name="lineStyle"
               value={property[activeId]?.lineStyle}
+              onChange={change}
+            />
+          </span>
+          <span>
+          rotation{" "}
+            <input
+              type="number"
+              name="rotation"
+              value={property[activeId]?.rotation}
               onChange={change}
             />
           </span>

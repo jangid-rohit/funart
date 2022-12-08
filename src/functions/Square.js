@@ -1,15 +1,21 @@
 function reactangle(x, y, ctx, property) {
   console.log(property);
   ctx.beginPath();
+  
+  ctx.save();
+  ctx.translate(x, y);              //translate to center of shape
+  ctx.rotate( (Math.PI / 180) * property.rotation);  //rotate 25 degrees.
+  
+  ctx.translate(-x, -y);            //translate center back to 0,0
+  
   ctx.rect(
     x - property.radius / 2,
     y - property.radius / 2,
     property.radius,
     property.radius
   );
-  //ctx.arc(x, y, radius, 0, 2 * Math.PI, false);
-  //ctx.setLineDash([5, 5]);
-
+  
+  
   ctx.lineWidth = property.lineThickness;
   ctx.strokeStyle = property.lineColor;
 
@@ -24,6 +30,9 @@ function reactangle(x, y, ctx, property) {
     ctx.fill();
   }
   ctx.stroke();
+  ctx.restore();
+
+  
 }
 
 export default reactangle;
