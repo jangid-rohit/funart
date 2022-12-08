@@ -1,5 +1,4 @@
 function reactangle(x, y, ctx, property) {
-  console.log(property);
   ctx.beginPath();
 
   ctx.save();

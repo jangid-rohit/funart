@@ -13,6 +13,7 @@ function draw(propterties) {
     var x = canvas.width / 2;
     var y = canvas.height / 2;
     propterties.forEach((property) => {
+      console.log(property);
       if (property.isVisible) {
         if (property.shape === "circle") {
           circle(x, y, ctx, property);
@@ -43,11 +44,9 @@ function App() {
     });
   };
   const change = (e) => {
-    const id = activeId;
+    let id = activeId;
 
     let newValue = property[id];
-    console.log(property);
-
     switch (e.target.name) {
       case "radius":
         newValue.radius = Number.parseInt(e.target.value);
@@ -82,18 +81,42 @@ function App() {
       case "vMove":
         newValue.vMove = e.target.value;
         break;
-        case "hSkew":
-          newValue.hSkew = e.target.value;
-          break;
-        case "vSkew":
-          newValue.vSkew = e.target.value;
-          break;        
+      case "hSkew":
+        newValue.hSkew = e.target.value;
+        break;
+      case "vSkew":
+        newValue.vSkew = e.target.value;
+        break;
+      case "zIndex":
+        id = e.target.className;
+        newValue = property[id];
+        newValue.zIndex = Number.parseInt(e.target.value);
+        break;
+
       default:
         console.log("Nothing to happen here");
     }
+
     setProperty({ ...property, [id]: newValue });
-    console.log(newValue);
-    draw(Object.values(property));
+
+    function compareProperties(property1, property2, key) {
+      const pro1 = property1[key];
+      const pro2 = property2[key];
+
+      if (pro1 < pro2) {
+        return -1;
+      }
+      if (pro1 > pro2) {
+        return +1;
+      }
+      return 0;
+    }
+
+    const objects = Object.values(property);
+    objects.sort((prop1, prop2) => {
+      return compareProperties(prop1, prop2, "zIndex");
+    });
+    draw(objects);
   };
 
   const inputs = (e) => {
@@ -114,6 +137,7 @@ function App() {
         vMove: 0,
         hSkew: 0,
         vSkew: 0,
+        zIndex: 0,
       },
     };
     setProperty({ ...property, ...defaultProperty });
@@ -167,6 +191,7 @@ function App() {
               <tr>
                 <td>Show</td>
                 <td>Shape</td>
+                <td>z-index</td>
                 <td>delete</td>
               </tr>
             </thead>
@@ -186,7 +211,15 @@ function App() {
                     <td onClick={activeShape} id={key}>
                       {value.shape}
                     </td>
-
+                    <td>
+                      <input
+                        type="number"
+                        name="zIndex"
+                        className={key}
+                        value={value.zIndex}
+                        onChange={change}
+                      />
+                    </td>
                     <td>
                       <button onClick={deleteMe} id={key} name="deleteMe">
                         Delete
