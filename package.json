@@ -1,6 +1,5 @@
 {
   "name": "art",
-  "homepage":"https://rohitsharma51.github.io/funart",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -8,9 +7,7 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "predeploy": "npm run build",
-    "deploy" : "gh-pages -d build"
-
+    "predeploy": "npm run build"
   },
   "dependencies": {
     "react": "^18.2.0",
@@ -19,8 +16,7 @@
   "devDependencies": {
     "@types/react": "^18.0.24",
     "@types/react-dom": "^18.0.8",
-    "@vitejs/plugin-react": "^2.2.0",
-    "gh-pages": "^4.0.0",
-    "vite": "^3.2.3"
+    "@vitejs/plugin-react": "^4.0.3",
+    "vite": "^4.4.4"
   }
 }
