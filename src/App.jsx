@@ -1,36 +1,42 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Nav } from "./components/Nav";
 import circle from "./functions/Circle";
 import "./App.css";
 import reactangle from "./functions/Square";
 import triangle from "./functions/Triangle";
-
-function draw(propterties) {
-  var canvas = document.getElementById("canvas");
-  if (canvas.getContext) {
-    var ctx = canvas.getContext("2d");
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    var x = canvas.width / 2;
-    var y = canvas.height / 2;
-    propterties.forEach((property) => {
-      console.log(property);
-      if (property.isVisible) {
-        if (property.shape === "circle") {
-          circle(x, y, ctx, property);
-        } else if (property.shape === "square") {
-          reactangle(x, y, ctx, property);
-        } else if (property.shape === "triangle") {
-          triangle(x, y, ctx, property);
-        }
-      }
-    });
-  }
-}
+import { Box } from "./components/Box";
+import { InputNumber } from "./components/InputNumber";
+import { InputRange } from "./components/InputRange";
+import { InputNumberRange } from "./components/InputNumberRange";
 
 function App() {
   const [property, setProperty] = useState({});
 
   const [activeId, setActiveId] = useState();
+
+  const canvasRef = useRef(null);
+
+  const draw = (propterties) => {
+    const canvas = canvasRef.current;
+    if (canvas.getContext) {
+      const ctx = canvas.getContext("2d");
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      const x = canvas.width / 2;
+      const y = canvas.height / 2;
+      propterties.forEach((property) => {
+        console.log(property);
+        if (property.isVisible) {
+          if (property.shape === "circle") {
+            circle(x, y, ctx, property);
+          } else if (property.shape === "square") {
+            reactangle(x, y, ctx, property);
+          } else if (property.shape === "triangle") {
+            triangle(x, y, ctx, property);
+          }
+        }
+      });
+    }
+  };
 
   const activeShape = (e) => {
     setActiveId((p) => {
@@ -169,8 +175,9 @@ function App() {
   return (
     <div className="App">
       <Nav />
+
       <div className="art-portion">
-        <canvas id="canvas" width="500" height="500"></canvas>
+        <canvas id="canvas" width="500" height="500" ref={canvasRef}></canvas>
       </div>
       <div className="side-bar">
         <div>
@@ -235,7 +242,7 @@ function App() {
         <div className="side-bar-bottom">
           <h3>Properties</h3>
 
-          <span>
+          <Box title="fill">
             filled{" "}
             <input
               type="checkbox"
@@ -250,17 +257,16 @@ function App() {
               value={property[activeId]?.fillColor}
               onChange={change}
             />
-          </span>
-          <span>
-            radius{" "}
+          </Box>
+          <Box title="radius/width">
             <input
               type="number"
               name="radius"
               value={property[activeId]?.radius}
               onChange={change}
             />
-          </span>
-          <span>
+          </Box>
+          <Box title="line">
             line color{" "}
             <input
               type="color"
@@ -275,8 +281,6 @@ function App() {
               value={property[activeId]?.lineThickness}
               onChange={change}
             />
-          </span>
-          <span>
             line dots{" "}
             <input
               type="checkbox"
@@ -291,55 +295,50 @@ function App() {
               value={property[activeId]?.lineStyle}
               onChange={change}
             />
-          </span>
-          <span>
-            rotation{" "}
-            <input
-              type="number"
+          </Box>
+
+          <Box title="rotation">
+            <InputNumberRange
               name="rotation"
+              range={[-360, 360, 1]}
               value={property[activeId]?.rotation}
               onChange={change}
             />
-          </span>
-          <span>
-            h-move{" "}
-            <input
-              type="number"
+          </Box>
+
+          <Box title="movement">
+            horizontal{" "}
+            <InputNumberRange
               name="hMove"
+              range={[-1000, 1000, 0.1]}
               value={property[activeId]?.hMove}
               onChange={change}
             />
-          </span>
-          <span>
-            v-move{" "}
-            <input
-              type="number"
+            vertical{" "}
+            <InputNumberRange
               name="vMove"
+              range={[-1000, 1000, 0.1]}
               value={property[activeId]?.vMove}
               onChange={change}
             />
-          </span>
+          </Box>
 
-          <span>
-            h-skew{" "}
-            <input
-              type="number"
+          <Box title="skew">
+            horizontal{" "}
+            <InputNumberRange
               name="hSkew"
+              range={[-1000, 1000, 0.1]}
               value={property[activeId]?.hSkew}
               onChange={change}
-              step="0.1"
             />
-          </span>
-          <span>
-            v-skew{" "}
-            <input
-              type="number"
+            vertical{" "}
+            <InputNumberRange
               name="vSkew"
+              range={[-1000, 1000, 0.1]}
               value={property[activeId]?.vSkew}
               onChange={change}
-              step="0.1"
             />
-          </span>
+          </Box>
         </div>
       </div>
     </div>
