@@ -24,7 +24,6 @@ function App() {
       const x = canvas.width / 2;
       const y = canvas.height / 2;
       propterties.forEach((property) => {
-        console.log(property);
         if (property.isVisible) {
           if (property.shape === "circle") {
             circle(x, y, ctx, property);
@@ -171,6 +170,30 @@ function App() {
       ",0.4)"
     );
   };
+  const download = () => {
+    const dataStr =
+      "data:text/json;charset=utf-8," +
+      encodeURIComponent(JSON.stringify(property));
+    const downloadAnchorNode = document.createElement("a");
+    downloadAnchorNode.setAttribute("href", dataStr);
+    downloadAnchorNode.setAttribute("download", "myart" + ".funart");
+    document.body.appendChild(downloadAnchorNode); // required for firefox
+    downloadAnchorNode.click();
+    downloadAnchorNode.remove();
+  };
+  const upload = (event) => {
+    let reader = new FileReader();
+    reader.onload = onReaderLoad;
+    reader.readAsText(event.target.files[0]);
+
+    function onReaderLoad(event) {
+      console.log(event.target.result);
+      let obj = JSON.parse(event.target.result);
+      console.log(obj);
+      setProperty(obj);
+      draw(Object.values(obj));
+    }
+  };
 
   return (
     <div className="App">
@@ -187,9 +210,11 @@ function App() {
           <button onClick={inputs} id="square">
             Add Square
           </button>
-          <button onClick={inputs} id="triangle" hidden>
+          <button onClick={inputs} id="triangle">
             Add Triangle
           </button>
+          <button onClick={download}>Download</button>
+          <input type="file" onChange={upload} />
         </div>
 
         <div>
